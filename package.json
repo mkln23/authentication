@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
     "prepare": "husky",
-    "lint:check": "eslint . --config eslint.config.js",
+    "lint:check": "eslint",
+    "format": "prettier --write \"**/*.+(js|ts|json|yml)\"",
     "lint:fix": "eslint --fix . && prettier --write .",
     "check-types": "tsc --noEmit"
   },
@@ -40,7 +40,8 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.38.0"
+    "typescript-eslint": "^8.38.0",
+    "validate-branch-name": "^1.3.2"
   },
   "lint-staged": {
     "*.{js,ts}": [
@@ -49,6 +50,17 @@
     ],
     "*.{json,md,yml,mjs}": [
       "prettier --write"
+    ]
+  },
+  "validate-branch-name": {
+    "pattern": "^(task|bug)/\\d+-[a-z0-9-]+$|^misc/[a-z0-9-]+$|^release/v?\\d+\\.\\d+(\\.\\d+)?-[a-z0-9-]+$|^hotfix/\\d+-[a-z0-9-]+$",
+    "errorMsg": "Branch name must follow one of these patterns:\n• task|bug/<ID>-kebab-case (e.g., task/123-add-user-auth)\n• misc/kebab-case (e.g., misc/update-readme)\n• release/X.Y.Z-desc (e.g., release/1.2.0-new-features)\n• hotfix/<ID>-kebab-case (e.g., hotfix/456-fix-login-bug)",
+    "ignoredBranches": [
+      "main",
+      "master",
+      "dev",
+      "develop",
+      "staging"
     ]
   },
   "commitlint": {
