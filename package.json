@@ -1,0 +1,92 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
+    "prepare": "husky",
+    "lint:check": "eslint",
+    "format": "prettier --write \"**/*.+(js|ts|json|yml)\"",
+    "lint:fix": "eslint --fix . && prettier --write .",
+    "check-types": "tsc --noEmit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
+    "zod": "^4.0.11"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.3",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.38.0",
+    "validate-branch-name": "^1.3.2"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run lint:fix",
+      "npm run lint:check"
+    ],
+    "*.{json,md,yml,mjs}": [
+      "prettier --write"
+    ]
+  },
+  "validate-branch-name": {
+    "pattern": "^(task|bug)/\\d+-[a-z0-9-]+$|^misc/[a-z0-9-]+$|^release/v?\\d+\\.\\d+(\\.\\d+)?-[a-z0-9-]+$|^hotfix/\\d+-[a-z0-9-]+$",
+    "errorMsg": "Branch name must follow one of these patterns:\n• task|bug/<ID>-kebab-case (e.g., task/123-add-user-auth)\n• misc/kebab-case (e.g., misc/update-readme)\n• release/X.Y.Z-desc (e.g., release/1.2.0-new-features)\n• hotfix/<ID>-kebab-case (e.g., hotfix/456-fix-login-bug)",
+    "ignoredBranches": [
+      "main",
+      "master",
+      "dev",
+      "develop",
+      "staging"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "chore",
+          "ci",
+          "cr",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "style",
+          "test",
+          "wip"
+        ]
+      ]
+    }
+  }
+}
