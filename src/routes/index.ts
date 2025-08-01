@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { ApiRoutes } from "@/constants/apiRoutes";
+import { ApiRoutes } from "@/constants/apiRoutes.constant";
 import { healthCheck } from "@/controllers/health.controller";
 
 import { authRouter } from "./auth";

@@ -1,21 +1,19 @@
-import express from "express";
-import { createServer } from "http";
+import "reflect-metadata";
+import "express-async-errors";
 
+import { connectDB } from "./configs/database";
 import { validatedEnv } from "./configs/env";
-import { ApiRoutes } from "./constants/apiRoutes";
-import { apiRouter } from "./routes";
+import app from "./server";
 
-export const app = express();
-app.use(express.json());
-app.use(ApiRoutes.API_BASE, apiRouter);
-
-const server = createServer(app);
 const port = validatedEnv.PORT;
-
-try {
-  server.listen(port, () => {
-    console.info(`Server started at port ${port}`);
+const startServer = async () => {
+  await connectDB();
+  const server = app.listen(port, () => {
+    console.info(`✅ Server started at port ${port}`);
   });
-} catch (error) {
-  console.error(error);
-}
+  return server;
+};
+
+startServer().catch((error) => {
+  console.error(`Error starting server: ${error}`);
+});

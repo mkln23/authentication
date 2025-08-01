@@ -5,7 +5,10 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import pluginJest from "eslint-plugin-jest";
 
+const testPaths = ["**/*.spec.ts", "**/*.test.ts"];
+const testIgnores = ["node_modules"];
 const filePaths = ["**/*.ts"];
 const filePathsIgnore = [
   "build/",
@@ -51,6 +54,22 @@ const config = tseslint.config(
       "linebreak-style": ["error", "unix"],
       semi: ["error", "always"],
       "no-unused-vars": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-empty-object-type": [
+        "error",
+        {
+          allowObjectTypes: "always",
+        },
+      ],
+      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          checksVoidReturn: false,
+        },
+      ],
+      "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -90,6 +109,19 @@ const config = tseslint.config(
     },
     files: filePaths,
     ignores: filePathsIgnore,
+  },
+  {
+    files: testPaths,
+    ignores: testIgnores,
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
+    },
+    ...pluginJest.configs["flat/all"],
+    rules: {
+      "jest/prefer-expect-assertions": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+    },
   },
 );
 

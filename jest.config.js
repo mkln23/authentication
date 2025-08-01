@@ -1,0 +1,35 @@
+module.exports = {
+  preset: "ts-jest",
+  testEnvironment: "node",
+  coverageProvider: "v8",
+  moduleNameMapper: {
+    "@/(.*)": "<rootDir>/src/$1",
+  },
+  testMatch: ["**/tests/**/*.test.ts"],
+  clearMocks: true,
+  coverageDirectory: "coverage",
+  coverageReporters: [
+    "html",
+    "text",
+    "lcov",
+    "cobertura",
+    "json-summary",
+    "text-summary",
+  ], // lcov generates an HTML report
+  coveragePathIgnorePatterns: [
+    ".json",
+    ".js",
+    ".mjs",
+    ".d.ts",
+    "<rootDir>/src/index.ts",
+    "<rootDir>/src/tests/",
+    "<rootDir>/src/shared/",
+    "<rootDir>/src/database/",
+    "<rootDir>/src/configs/",
+  ],
+  collectCoverage: true,
+  collectCoverageFrom: ["<rootDir>/src/**"],
+  globalSetup: "<rootDir>/src/tests/globalSetup.ts",
+  globalTeardown: "<rootDir>/src/tests/globalTeardown.ts",
+  setupFilesAfterEnv: ["<rootDir>/src/tests/setupAfterEnv.ts"],
+};
