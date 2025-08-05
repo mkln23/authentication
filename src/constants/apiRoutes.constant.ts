@@ -7,4 +7,6 @@ export const ApiRoutes = {
   SEND_MAIL: "/send-mail",
   SEND_OTP: "/send-otp",
   VERIFY_OTP: "/verify-otp",
+  LOGIN: "/login",
+  REFRESH_TOKEN: "/refresh-token",
 };

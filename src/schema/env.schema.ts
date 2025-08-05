@@ -15,4 +15,6 @@ export const envSchema = z.object({
   MAIL_USERNAME: z.email(),
   PASS_KEY: z.string(),
   TOTP_SECRET: z.string(),
+  JWT_REFRESH_SECRET: z.string(),
+  JWT_ACCESS_SECRET: z.string(),
 });

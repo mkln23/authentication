@@ -33,8 +33,6 @@ describe("POST New User", () => {
       };
       const response = await sendRequest(userbody);
 
-      console.log(response.body);
-
       expect(response.status).toBe(httpStatus.CREATED);
       expect(response.body).toHaveProperty("user");
       expect(response.body.user).toHaveProperty("id");

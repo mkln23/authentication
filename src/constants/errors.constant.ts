@@ -23,10 +23,17 @@ export const UPSERT_FAILED = "Upsert failed: record not found after upsert";
 
 export const userAlreadyExist = (email: string) =>
   `User with email ${email} already exists`;
-export const USER_DOES_NOT_EXIST = "No active user exists with the given ID";
+export const userDoesNotExistWithGivenKey = (key: string) =>
+  `No active user exists with the given ${key}`;
 export const NO_USER_EXIST = "No active user exists";
 export const USER_ALREADY_ACTIVE = "User is already active";
 export const USER_DELETED = "User Profile is deleted";
 export const USER_ALREADY_DISABLED = "User Profile is already disabled";
 export const PROFILE_SHOULD_BE_ACTIVE =
   "Profile should be activated to perform this action";
+
+export const INVALID_DB_ENTRY = "Invalid data in database";
+export const INVALID_TOKEN = "Invalid token";
+export const WRONG_PASSWORD = "Wrong Password";
+export const USER_UNAUTHORISED = "User is unauthorised";
+export const TOKEN_MISSING = "Authorization header missing or invalid";
