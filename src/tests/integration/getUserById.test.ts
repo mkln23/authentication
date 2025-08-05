@@ -39,7 +39,7 @@ describe("GET User by ID", () => {
       expect(response.body.user).toHaveProperty("updatedAt");
       expect(response.body.user).toHaveProperty("deletedAt");
       expect(response.body.user.deletedAt).toBe(null);
-      expect(response.body.user).not.toHaveProperty("passowrd");
+      expect(response.body.user).not.toHaveProperty("password");
     });
 
     it("should return error if no user exist with the requested userId", async () => {

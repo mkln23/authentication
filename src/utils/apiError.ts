@@ -16,10 +16,10 @@ class ApiError extends Error {
   }
 }
 
-class UnauthorizationError extends ApiError {
+class EmailError extends ApiError {
   constructor(message: string) {
-    super(message, httpStatus.FORBIDDEN); // 403
+    super(message, httpStatus.BAD_REQUEST); // 403
   }
 }
 
-export { ApiError, UnauthorizationError };
+export { ApiError, EmailError };

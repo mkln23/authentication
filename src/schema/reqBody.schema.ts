@@ -13,4 +13,9 @@ export const createUserBodySchema = z.object({
   password: z.string().nonempty(validationError.valueNotFound("password")),
 });
 
+export const otpBodySchema = z.object({
+  otp: z.string(),
+});
+
 export type CreateUserBodyType = z.infer<typeof createUserBodySchema>;
+export type OTPBodyType = z.infer<typeof otpBodySchema>;

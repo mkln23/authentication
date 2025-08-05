@@ -37,7 +37,9 @@ describe("GET all active Users", () => {
         expect(user).toHaveProperty("updatedAt");
         expect(user).toHaveProperty("deletedAt");
         expect(user.deletedAt).toBe(null);
-        expect(user).not.toHaveProperty("passowrd");
+        expect(user).toHaveProperty("mfaSecret");
+        expect(user.mfaSecret).not.toBe(null);
+        expect(user).not.toHaveProperty("password");
       });
     });
 
