@@ -5,6 +5,8 @@ import {
   createUser,
   getAllUsers,
   getUser,
+  login,
+  refreshToken,
   sendMail,
   sendOTP,
   verifyOTP,
@@ -12,9 +14,15 @@ import {
 import { validatePathParam } from "@/middlewares/validatePathParam.middleware";
 import { validateQueryParams } from "@/middlewares/validateQueryParams.middleware";
 import { validateReqBody } from "@/middlewares/validateReqBody.middleware";
+import { validateToken } from "@/middlewares/validateToken.middleware";
 import { USERID } from "@/schema/pathParam.schema";
 import { actionSchema } from "@/schema/queryParam.schema";
-import { createUserBodySchema, otpBodySchema } from "@/schema/reqBody.schema";
+import {
+  createUserBodySchema,
+  loginBodySchema,
+  otpBodySchema,
+  refreshTokenBodySchema,
+} from "@/schema/reqBody.schema";
 
 export const authRouter = Router();
 
@@ -24,7 +32,7 @@ authRouter.post(
   createUser,
 );
 
-authRouter.get(ApiRoutes.USERS, getAllUsers);
+authRouter.get(ApiRoutes.USERS, validateToken, getAllUsers);
 
 authRouter.get(
   `${ApiRoutes.USERS}${ApiRoutes.USERID}`,
@@ -48,4 +56,12 @@ authRouter.post(
     validateReqBody(otpBodySchema),
   ],
   verifyOTP,
+);
+
+authRouter.post(ApiRoutes.LOGIN, validateReqBody(loginBodySchema), login);
+
+authRouter.post(
+  ApiRoutes.REFRESH_TOKEN,
+  validateReqBody(refreshTokenBodySchema),
+  refreshToken,
 );

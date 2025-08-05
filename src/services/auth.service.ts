@@ -8,15 +8,23 @@ import {
   USER_ALREADY_ACTIVE,
   USER_ALREADY_DISABLED,
   USER_DELETED,
-  USER_DOES_NOT_EXIST,
   userAlreadyExist,
+  userDoesNotExistWithGivenKey,
   WRONG_OTP,
+  WRONG_PASSWORD,
 } from "@/constants/errors.constant";
 import { Users } from "@/database/entities/User.entity";
 import { ProfileAction } from "@/enums/profileAction.enum";
 import { UserStatus } from "@/enums/userStatus.enums";
-import type { CreateUserBodyType } from "@/schema/reqBody.schema";
+import { USERID } from "@/schema/pathParam.schema";
+import {
+  type CreateUserBodyType,
+  EMAIL,
+  type LoginBodyType,
+} from "@/schema/reqBody.schema";
 import { ApiError } from "@/utils/apiError";
+import { compareHash, generatehash } from "@/utils/crypto";
+import { generateTokens } from "@/utils/token";
 
 import { find, findOne, insertOne, updateOne } from "./database.service";
 import { MailService } from "./mail.service";
@@ -33,6 +41,7 @@ export class AuthService {
       validatedEnv.TOTP_SECRET + ":" + ProfileAction.ACTIVATE,
     );
     const userPayload = { ...userBody, mfaSecret };
+    userPayload.password = await generatehash(userPayload.password);
     const result = await insertOne(Users, userPayload);
     await MailService.sendMail(
       ProfileAction.ACTIVATE,
@@ -60,7 +69,10 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ApiError(USER_DOES_NOT_EXIST, httpStatus.NOT_FOUND);
+      throw new ApiError(
+        userDoesNotExistWithGivenKey(USERID),
+        httpStatus.NOT_FOUND,
+      );
     }
 
     const mfaSecret = totp.generate(validatedEnv.TOTP_SECRET + ":" + action);
@@ -86,7 +98,10 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ApiError(USER_DOES_NOT_EXIST, httpStatus.NOT_FOUND);
+      throw new ApiError(
+        userDoesNotExistWithGivenKey(USERID),
+        httpStatus.NOT_FOUND,
+      );
     }
 
     this.throwErrorIfActionNotAllowed(user, action);
@@ -177,5 +192,21 @@ export class AuthService {
         break;
       }
     }
+  }
+
+  static async loginCustomer(loginBody: LoginBodyType) {
+    const user = await findOne(Users, {
+      where: { email: loginBody.email },
+    });
+
+    if (!user) {
+      throw new ApiError(userDoesNotExistWithGivenKey(EMAIL));
+    }
+
+    if (!(await compareHash(loginBody.password, user.password))) {
+      throw new ApiError(WRONG_PASSWORD);
+    }
+
+    return generateTokens(user.id);
   }
 }

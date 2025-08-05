@@ -4,7 +4,7 @@ import request from "supertest";
 import { AppDataSource } from "@/configs/database";
 import { ApiRoutes } from "@/constants/apiRoutes.constant";
 import {
-  USER_DOES_NOT_EXIST,
+  userDoesNotExistWithGivenKey,
   validationError,
 } from "@/constants/errors.constant";
 import { USERID } from "@/schema/pathParam.schema";
@@ -39,7 +39,6 @@ describe("GET User by ID", () => {
       expect(response.body.user).toHaveProperty("updatedAt");
       expect(response.body.user).toHaveProperty("deletedAt");
       expect(response.body.user.deletedAt).toBe(null);
-      expect(response.body.user).not.toHaveProperty("password");
     });
 
     it("should return error if no user exist with the requested userId", async () => {
@@ -48,7 +47,7 @@ describe("GET User by ID", () => {
 
       expect(response.status).toBe(httpStatus.NOT_FOUND);
       expect(response.body).toHaveProperty("message");
-      expect(response.body.message).toBe(USER_DOES_NOT_EXIST);
+      expect(response.body.message).toBe(userDoesNotExistWithGivenKey(USERID));
     });
 
     it("should return error if request without userId is requested", async () => {

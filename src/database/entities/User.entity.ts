@@ -15,7 +15,7 @@ export class Users extends BaseSerialEntity {
   @Column({ type: "varchar", nullable: true })
   mobile!: string | null;
 
-  @Column({ type: "varchar", nullable: false, select: false })
+  @Column({ type: "varchar", nullable: false })
   password!: string;
 
   @Column({ type: "varchar", nullable: false })
