@@ -4,6 +4,7 @@ import { Factory } from "@jorgebodega/typeorm-factory";
 import type { DataSource, EntityManager } from "typeorm";
 
 import { Users } from "@/database/entities/User.entity";
+import { UserStatus } from "@/enums/userStatus.enums";
 
 export class UserFactory extends Factory<Users> {
   protected entity = Users;
@@ -24,6 +25,8 @@ export class UserFactory extends Factory<Users> {
       mobile: faker.string.numeric(10), //TODO: verify format
       email: faker.internet.email(),
       password: faker.internet.password({ length: 12 }),
+      mfaSecret: faker.word.sample(6),
+      status: UserStatus.ACTIVE,
     };
   }
 }

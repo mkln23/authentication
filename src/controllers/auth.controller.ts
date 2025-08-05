@@ -5,9 +5,12 @@ import {
   NO_USER_EXIST,
   USER_DOES_NOT_EXIST,
 } from "@/constants/errors.constant";
+import { ProfileAction } from "@/enums/profileAction.enum";
 import type { UserIdType } from "@/schema/pathParam.schema";
-import type { CreateUserBodyType } from "@/schema/reqBody.schema";
+import type { ActionQueryType } from "@/schema/queryParam.schema";
+import type { CreateUserBodyType, OTPBodyType } from "@/schema/reqBody.schema";
 import { AuthService } from "@/services/auth.service";
+import { MailService } from "@/services/mail.service";
 import { ApiError } from "@/utils/apiError";
 import type { CustomRequest } from "@/utils/customRequest";
 
@@ -42,4 +45,38 @@ export const getAllUsers: RequestHandler = async (_, res) => {
   return res.status(httpStatus.FOUND).json({
     users,
   });
+};
+
+export const sendMail: RequestHandler = async (_, res) => {
+  await MailService.sendMail(
+    ProfileAction.ACTIVATE,
+    "mukilan.seetharaman@rootquotient.com",
+    "otp",
+  );
+  return res.status(httpStatus.OK).json({
+    message: "Email sent successfully",
+  });
+};
+
+export const sendOTP = async (
+  req: CustomRequest<ActionQueryType, UserIdType>,
+  res: Response,
+) => {
+  const result = await AuthService.sendOTPByUserId(
+    +req.params.userId,
+    req.query.action,
+  );
+  return res.status(httpStatus.OK).json(result);
+};
+
+export const verifyOTP = async (
+  req: CustomRequest<ActionQueryType, UserIdType, OTPBodyType>,
+  res: Response,
+) => {
+  const result = await AuthService.verifyOTPByUserId(
+    +req.params.userId,
+    req.query.action,
+    req.body.otp,
+  );
+  return res.status(httpStatus.OK).json(result);
 };

@@ -12,4 +12,7 @@ export const envSchema = z.object({
   DATABASE_NAME: z.string(),
   DATABASE_CONNECTION_LIMIT: z.coerce.number().default(10),
   SALT_ROUNDS: z.coerce.number().default(10),
+  MAIL_USERNAME: z.email(),
+  PASS_KEY: z.string(),
+  TOTP_SECRET: z.string(),
 });

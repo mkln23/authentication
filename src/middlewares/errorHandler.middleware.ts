@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { ZodError } from "zod";
 
 import { ApiError } from "@/utils/apiError";
+import { DatabaseError } from "@/utils/databaseError";
 import formatZodError from "@/utils/formatZodError";
 
 export default function errorHandler(
@@ -19,6 +20,9 @@ export default function errorHandler(
     return res.status(httpStatus.BAD_REQUEST).json(formatZodError(err));
   }
   if (err instanceof ApiError) {
+    return res.status(err.status).json({ message: err.message });
+  }
+  if (err instanceof DatabaseError) {
     return res.status(err.status).json({ message: err.message });
   }
 }

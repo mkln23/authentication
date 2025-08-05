@@ -1,5 +1,7 @@
 import { Column, Entity } from "typeorm";
 
+import { UserStatus } from "@/enums/userStatus.enums";
+
 import BaseSerialEntity from "./Base.entity";
 
 @Entity({ name: "users" })
@@ -15,4 +17,10 @@ export class Users extends BaseSerialEntity {
 
   @Column({ type: "varchar", nullable: false, select: false })
   password!: string;
+
+  @Column({ type: "varchar", nullable: false })
+  mfaSecret!: string;
+
+  @Column({ type: "enum", enum: UserStatus, default: UserStatus.CREATED })
+  status!: UserStatus;
 }
