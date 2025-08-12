@@ -94,7 +94,9 @@ export const login = async (
   req: CustomRequest<{}, {}, LoginBodyType>,
   res: Response,
 ) => {
+  console.log("controller");
   const tokens = await AuthService.loginCustomer(req.body);
+  console.log(tokens);
   res.status(httpStatus.OK).json(tokens);
 };
 

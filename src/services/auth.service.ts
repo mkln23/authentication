@@ -195,9 +195,12 @@ export class AuthService {
   }
 
   static async loginCustomer(loginBody: LoginBodyType) {
+    console.log("service");
     const user = await findOne(Users, {
       where: { email: loginBody.email },
     });
+    console.log("found");
+    console.log(user);
 
     if (!user) {
       throw new ApiError(userDoesNotExistWithGivenKey(EMAIL));
