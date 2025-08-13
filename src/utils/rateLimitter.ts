@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 
+import { validatedEnv } from "@/configs/env";
 import { getRedisClient } from "@/configs/redis";
 import {
   IP_NOT_FOUND_ERROR,
@@ -22,7 +23,7 @@ const rateLimiter = async (
 
   const ip = req.ip;
   const timeWindowSeconds = 15 * 60; // 15 minutes
-  const maxRequests = 10;
+  const maxRequests = validatedEnv.MAX_REQUEST_PER_WINDOW;
   const key = `rate_limit:${ip}`;
 
   // Increment request count
