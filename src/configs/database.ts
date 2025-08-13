@@ -105,8 +105,6 @@ export const connectDB = async () => {
 
   try {
     dataSource = await AppDataSource.initialize();
-    console.log(dataSource.entityMetadatasMap);
-    console.log(dataSource.migrations);
     console.info("✅ Database connection established");
 
     await dataSource.runMigrations();
