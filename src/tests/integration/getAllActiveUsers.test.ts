@@ -1,3 +1,4 @@
+import type { NextFunction } from "express";
 import httpStatus from "http-status";
 import jwt from "jsonwebtoken";
 import request from "supertest";
@@ -9,6 +10,13 @@ import type { Users } from "@/database/entities/User.entity";
 import app from "@/server";
 
 import { UserFactory } from "../factories/user.factory";
+
+jest.mock("@/utils/rateLimitter", () => ({
+  __esModule: true,
+  default: jest.fn((_req, _res, next: NextFunction) => {
+    next();
+  }),
+}));
 
 const GET_ACTIVE_USERS = `${ApiRoutes.API_BASE}${ApiRoutes.AUTH}${ApiRoutes.USERS}`;
 

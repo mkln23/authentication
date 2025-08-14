@@ -1,3 +1,4 @@
+import type { NextFunction } from "express";
 import httpStatus from "http-status";
 import request from "supertest";
 
@@ -7,6 +8,13 @@ import { UserStatus } from "@/enums/userStatus.enums";
 import type { CreateUserBodyType } from "@/schema/reqBody.schema";
 import app from "@/server";
 import { MailService } from "@/services/mail.service";
+
+jest.mock("@/utils/rateLimitter", () => ({
+  __esModule: true,
+  default: jest.fn((_req, _res, next: NextFunction) => {
+    next();
+  }),
+}));
 
 const CREATE_NEW_USER = `${ApiRoutes.API_BASE}${ApiRoutes.AUTH}${ApiRoutes.USERS}`;
 

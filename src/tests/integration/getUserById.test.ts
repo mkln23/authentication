@@ -1,3 +1,4 @@
+import type { NextFunction } from "express";
 import httpStatus from "http-status";
 import request from "supertest";
 
@@ -11,6 +12,13 @@ import { USERID } from "@/schema/pathParam.schema";
 import app from "@/server";
 
 import { UserFactory } from "../factories/user.factory";
+
+jest.mock("@/utils/rateLimitter", () => ({
+  __esModule: true,
+  default: jest.fn((_req, _res, next: NextFunction) => {
+    next();
+  }),
+}));
 
 const GET_USER_BY_ID = `${ApiRoutes.API_BASE}${ApiRoutes.AUTH}${ApiRoutes.USERS}${ApiRoutes.USERID}`;
 

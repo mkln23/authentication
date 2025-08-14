@@ -1,8 +1,16 @@
+import type { NextFunction } from "express";
 import httpStatus from "http-status";
 import request from "supertest";
 
 import { ApiRoutes } from "@/constants/apiRoutes.constant";
 import app from "@/server";
+
+jest.mock("@/utils/rateLimitter", () => ({
+  __esModule: true,
+  default: jest.fn((_req, _res, next: NextFunction) => {
+    next();
+  }),
+}));
 
 const HEALTH_CHECK_URL = `${ApiRoutes.API_BASE}${ApiRoutes.HEALTH}`;
 
