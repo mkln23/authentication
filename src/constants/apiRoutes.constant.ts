@@ -9,4 +9,6 @@ export const ApiRoutes = {
   VERIFY_OTP: "/verify-otp",
   LOGIN: "/login",
   REFRESH_TOKEN: "/refresh-token",
+  DOWNLOAD_FILE: "/download-file",
+  DOWNLOAD_EXCEL: "/download-excel",
 };

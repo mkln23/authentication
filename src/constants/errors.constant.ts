@@ -20,6 +20,12 @@ export const DATABASE_ERROR = "DatabaseQueryError";
 export const DEFAULT_ERROR_STATUS = httpStatus.INTERNAL_SERVER_ERROR;
 export const UPDATE_FAILED = "Update failed: record not found after update";
 export const UPSERT_FAILED = "Upsert failed: record not found after upsert";
+export const DEFAULT_RATE_LIMITTER_ERROR_STATUS = httpStatus.TOO_MANY_REQUESTS;
+export const RATE_LIMITTER_ERROR = "RateLimittingError";
+export const TOO_MANY_REQUESTS = "Too many requests";
+export const IP_NOT_FOUND_ERROR = "IP address not found";
+export const REDIS_ERROR = "Redis Connection error";
+export const INTERNAL_SERVER_ERROR = "Internal Server Error";
 
 export const userAlreadyExist = (email: string) =>
   `User with email ${email} already exists`;

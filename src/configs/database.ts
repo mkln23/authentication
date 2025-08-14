@@ -11,6 +11,26 @@ const basePath = path.join(__dirname, "..", "database");
 const modelsGlob = path.join(basePath, "entities/**/*.{js,ts}");
 const migrationsGlob = path.join(basePath, "migrations/**/*.{js,ts}");
 
+// export const AppDataSource = new DataSource({
+//   type: "postgres",
+//   host: validatedEnv.DATABASE_HOST,
+//   port: validatedEnv.DATABASE_PORT,
+//   username: validatedEnv.DATABASE_USER,
+//   password: validatedEnv.DATABASE_PASSWORD,
+//   database: validatedEnv.DATABASE_NAME,
+//   synchronize: false,
+//   logging: false,
+//   useUTC: true,
+//   entities: [modelsGlob],
+//   migrations: [migrationsGlob],
+//   subscribers: [],
+//   extra: {
+//     connectionLimit: validatedEnv.DATABASE_CONNECTION_LIMIT,
+//   },
+// });
+
+const isCompiled = path.extname(__filename) === ".js";
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: validatedEnv.DATABASE_HOST,
@@ -21,8 +41,24 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   logging: false,
   useUTC: true,
-  entities: [modelsGlob],
-  migrations: [migrationsGlob],
+  entities: isCompiled
+    ? [path.join(__dirname, "/database/entities/**/*.js")]
+    : [modelsGlob],
+  migrations: isCompiled
+    ? [path.join(__dirname, "/database/migrations/**/*.js")]
+    : [migrationsGlob],
+  // entities: [
+  //   path.join(
+  //     __dirname,
+  //     isCompiled ? "/entities/**/*.js" : "/entities/**/*.ts"
+  //   ),
+  // ],
+  // migrations: [
+  //   path.join(
+  //     __dirname,
+  //     isCompiled ? "/migrations/**/*.js" : "/migrations/**/*.ts"
+  //   ),
+  // ],
   subscribers: [],
   extra: {
     connectionLimit: validatedEnv.DATABASE_CONNECTION_LIMIT,
