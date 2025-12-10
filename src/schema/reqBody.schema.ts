@@ -1,31 +1,28 @@
-import z from "zod";
+import z from 'zod';
 
-import { validationError } from "@/constants/errors.constant";
-import { RegEx } from "@/constants/regEx.constant";
+import { validationError } from '@/constants/errors.constant';
+import { RegEx } from '@/constants/regEx.constant';
 
-export const EMAIL = "email";
+export const EMAIL = 'email';
 
 export const createUserBodySchema = z.object({
-  name: z.string().nonempty(validationError.valueNotFound("name")),
-  email: z.email().nonempty(validationError.valueNotFound("email")),
-  mobile: z
-    .string()
-    .regex(RegEx.MOBILE_NUMBER, "Mobile number must contain only digits")
-    .optional(),
-  password: z.string().nonempty(validationError.valueNotFound("password")),
+    name: z.string().nonempty(validationError.valueNotFound('name')),
+    email: z.email().nonempty(validationError.valueNotFound('email')),
+    mobile: z.string().regex(RegEx.MOBILE_NUMBER, 'Mobile number must contain only digits').optional(),
+    password: z.string().nonempty(validationError.valueNotFound('password')),
 });
 
 export const otpBodySchema = z.object({
-  otp: z.string(),
+    otp: z.string(),
 });
 
 export const loginBodySchema = z.object({
-  email: z.email(),
-  password: z.string().default(""),
+    email: z.email(),
+    password: z.string().default(''),
 });
 
 export const refreshTokenBodySchema = z.object({
-  refreshToken: z.string(),
+    refreshToken: z.string(),
 });
 
 export type CreateUserBodyType = z.infer<typeof createUserBodySchema>;

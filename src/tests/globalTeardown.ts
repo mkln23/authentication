@@ -1,8 +1,8 @@
-import "tsconfig-paths/register";
+import 'tsconfig-paths/register';
 
-import { AppDataSource } from "@/configs/database";
+import { AppDataSource } from '@/configs/database';
 
 export default async () => {
-  await AppDataSource.dropDatabase();
-  await AppDataSource.destroy();
+    await AppDataSource.dropDatabase();
+    await AppDataSource.destroy();
 };
