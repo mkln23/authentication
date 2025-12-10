@@ -1,133 +1,135 @@
 {
-  "name": "authentication",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
-    "typeorm": "ts-node --transpile-only -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/configs/database.ts",
-    "migration:generate": "npm run typeorm -- migration:generate",
-    "migration:run": "env-cmd -f .env npm run typeorm migration:run",
-    "migration:revert": "env-cmd -f .env npm run typeorm migration:revert",
-    "migration:show": "env-cmd -f .env npm run typeorm migration:show",
-    "migration:create": "npm run typeorm -- migration:create",
-    "test": "env-cmd -f .env.test jest --verbose --logHeapUsage --runInBand --detectOpenHandles",
-    "test:coverage": "env-cmd  -f .env.test jest --runInBand --coverage --detectOpenHandles",
-    "test:watch": "env-cmd  -f .env.test jest --verbose --watchAll --forceExit --detectOpenHandles",
-    "prepare": "husky",
-    "lint:check": "eslint",
-    "format": "prettier --write \"**/*.+(js|ts|json|yml)\"",
-    "lint:fix": "eslint --fix . && prettier --write .",
-    "check-types": "tsc --noEmit",
-    "build": "node esbuild.config.js && esbuild src/database/entities/**/*.ts --outdir=dist/entities --platform=node --format=cjs && esbuild src/database/migrations/**/*.ts --outdir=dist/migrations --platform=node --format=cjs",
-    "start": "node dist/index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@upstash/redis": "^1.35.3",
-    "bcrypt": "^5.1.1",
-    "dotenv": "^17.2.1",
-    "exceljs": "^4.4.0",
-    "express": "^4.21.2",
-    "express-async-errors": "^3.1.1",
-    "http": "^0.0.1-security",
-    "http-status": "^2.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "node-xlsx": "^0.24.0",
-    "nodemailer": "^7.0.5",
-    "otplib": "^12.0.1",
-    "pg": "^8.16.3",
-    "redis": "^4.7.1",
-    "reflect-metadata": "^0.2.2",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typeorm": "^0.3.25",
-    "zod": "^4.0.11"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@eslint/eslintrc": "^3.3.1",
-    "@faker-js/faker": "^9.9.0",
-    "@jorgebodega/typeorm-factory": "^2.1.0",
-    "@types/bcrypt": "^6.0.0",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^30.0.0",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.1.0",
-    "@types/nodemailer": "^6.4.17",
-    "@types/pg": "^8.15.5",
-    "@types/supertest": "^6.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
-    "env-cmd": "^10.1.0",
-    "esbuild": "^0.25.8",
-    "esbuild-node-externals": "^1.18.0",
-    "esbuild-plugin-alias": "^0.2.1",
-    "eslint": "^9.32.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jest": "^29.0.1",
-    "eslint-plugin-prettier": "^5.5.3",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-unused-imports": "^4.1.4",
-    "husky": "^9.1.7",
-    "jest": "^30.0.5",
-    "lint-staged": "^16.1.2",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.6.2",
-    "supertest": "^7.1.4",
-    "ts-jest": "^29.4.0",
-    "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.20.3",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.38.0",
-    "validate-branch-name": "^1.3.2"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "npm run lint:fix",
-      "npm run lint:check"
-    ],
-    "*.{json,md,yml,mjs}": [
-      "prettier --write"
-    ]
-  },
-  "validate-branch-name": {
-    "pattern": "^(task|bug)/\\d+-[a-z0-9-]+$|^misc/[a-z0-9-]+$|^release/v?\\d+\\.\\d+(\\.\\d+)?-[a-z0-9-]+$|^hotfix/\\d+-[a-z0-9-]+$",
-    "errorMsg": "Branch name must follow one of these patterns:\n• task|bug/<ID>-kebab-case (e.g., task/123-add-user-auth)\n• misc/kebab-case (e.g., misc/update-readme)\n• release/X.Y.Z-desc (e.g., release/1.2.0-new-features)\n• hotfix/<ID>-kebab-case (e.g., hotfix/456-fix-login-bug)",
-    "ignoredBranches": [
-      "main",
-      "master",
-      "dev",
-      "develop",
-      "staging"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ],
-    "rules": {
-      "type-enum": [
-        2,
-        "always",
-        [
-          "build",
-          "chore",
-          "ci",
-          "cr",
-          "docs",
-          "feat",
-          "fix",
-          "perf",
-          "refactor",
-          "revert",
-          "style",
-          "test",
-          "wip"
+    "name": "authentication",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/index.ts",
+        "typeorm": "ts-node --transpile-only -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/configs/database.ts",
+        "migration:generate": "npm run typeorm -- migration:generate",
+        "migration:run": "env-cmd -f .env npm run typeorm migration:run",
+        "migration:revert": "env-cmd -f .env npm run typeorm migration:revert",
+        "migration:show": "env-cmd -f .env npm run typeorm migration:show",
+        "migration:create": "npm run typeorm -- migration:create",
+        "test": "env-cmd -f .env.test jest --verbose --logHeapUsage --runInBand --detectOpenHandles",
+        "test:coverage": "env-cmd  -f .env.test jest --runInBand --coverage --detectOpenHandles",
+        "test:watch": "env-cmd  -f .env.test jest --verbose --watchAll --forceExit --detectOpenHandles",
+        "prepare": "husky",
+        "lint:check": "eslint",
+        "format": "prettier --write \"**/*.+(js|ts|json|yml)\"",
+        "lint:fix": "eslint --fix . && prettier --write .",
+        "check-types": "tsc --noEmit --pretty",
+        "build": "node esbuild.config.js && esbuild src/database/entities/**/*.ts --outdir=dist/entities --platform=node --format=cjs && esbuild src/database/migrations/**/*.ts --outdir=dist/migrations --platform=node --format=cjs",
+        "start": "node dist/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@upstash/redis": "^1.35.3",
+        "bcrypt": "^5.1.1",
+        "dotenv": "^17.2.1",
+        "exceljs": "^4.4.0",
+        "express": "^4.21.2",
+        "express-async-errors": "^3.1.1",
+        "http": "^0.0.1-security",
+        "http-status": "^2.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "node-tesseract-ocr": "^2.2.1",
+        "node-xlsx": "^0.24.0",
+        "nodemailer": "^7.0.5",
+        "otplib": "^12.0.1",
+        "pg": "^8.16.3",
+        "redis": "^4.7.1",
+        "reflect-metadata": "^0.2.2",
+        "tesseract.js": "^6.0.1",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "typeorm": "^0.3.25",
+        "zod": "^4.0.11"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "@eslint/eslintrc": "^3.3.1",
+        "@faker-js/faker": "^9.9.0",
+        "@jorgebodega/typeorm-factory": "^2.1.0",
+        "@types/bcrypt": "^6.0.0",
+        "@types/express": "^4.17.21",
+        "@types/jest": "^30.0.0",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/node": "^24.1.0",
+        "@types/nodemailer": "^6.4.17",
+        "@types/pg": "^8.15.5",
+        "@types/supertest": "^6.0.3",
+        "@typescript-eslint/eslint-plugin": "^8.38.0",
+        "@typescript-eslint/parser": "^8.38.0",
+        "env-cmd": "^10.1.0",
+        "esbuild": "^0.25.8",
+        "esbuild-node-externals": "^1.18.0",
+        "esbuild-plugin-alias": "^0.2.1",
+        "eslint": "^9.32.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-jest": "^29.0.1",
+        "eslint-plugin-prettier": "^5.5.3",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "eslint-plugin-unused-imports": "^4.1.4",
+        "husky": "^9.1.7",
+        "jest": "^30.0.5",
+        "lint-staged": "^16.1.2",
+        "nodemon": "^3.1.10",
+        "prettier": "^3.6.2",
+        "supertest": "^7.1.4",
+        "ts-jest": "^29.4.0",
+        "tsconfig-paths": "^4.2.0",
+        "tsx": "^4.20.3",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.38.0",
+        "validate-branch-name": "^1.3.2"
+    },
+    "lint-staged": {
+        "*.{js,ts}": [
+            "npm run lint:fix",
+            "npm run lint:check"
+        ],
+        "*.{json,md,yml,mjs}": [
+            "prettier --write"
         ]
-      ]
+    },
+    "validate-branch-name": {
+        "pattern": "^(task|bug)/\\d+-[a-z0-9-]+$|^misc/[a-z0-9-]+$|^release/v?\\d+\\.\\d+(\\.\\d+)?-[a-z0-9-]+$|^hotfix/\\d+-[a-z0-9-]+$",
+        "errorMsg": "Branch name must follow one of these patterns:\n• task|bug/<ID>-kebab-case (e.g., task/123-add-user-auth)\n• misc/kebab-case (e.g., misc/update-readme)\n• release/X.Y.Z-desc (e.g., release/1.2.0-new-features)\n• hotfix/<ID>-kebab-case (e.g., hotfix/456-fix-login-bug)",
+        "ignoredBranches": [
+            "main",
+            "master",
+            "dev",
+            "develop",
+            "staging"
+        ]
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ],
+        "rules": {
+            "type-enum": [
+                2,
+                "always",
+                [
+                    "build",
+                    "chore",
+                    "ci",
+                    "cr",
+                    "docs",
+                    "feat",
+                    "fix",
+                    "perf",
+                    "refactor",
+                    "revert",
+                    "style",
+                    "test",
+                    "wip"
+                ]
+            ]
+        }
     }
-  }
 }

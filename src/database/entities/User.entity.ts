@@ -1,26 +1,26 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity } from 'typeorm';
 
-import { UserStatus } from "@/enums/userStatus.enums";
+import { UserStatus } from '@/enums/userStatus.enums';
 
-import BaseSerialEntity from "./Base.entity";
+import BaseSerialEntity from './Base.entity';
 
-@Entity({ name: "users" })
+@Entity({ name: 'users' })
 export class Users extends BaseSerialEntity {
-  @Column({ type: "varchar", nullable: false })
-  name!: string;
+    @Column({ type: 'varchar', nullable: false })
+    name!: string;
 
-  @Column({ type: "varchar", nullable: false, unique: true })
-  email!: string;
+    @Column({ type: 'varchar', nullable: false, unique: true })
+    email!: string;
 
-  @Column({ type: "varchar", nullable: true })
-  mobile!: string | null;
+    @Column({ type: 'varchar', nullable: true })
+    mobile!: string | null;
 
-  @Column({ type: "varchar", nullable: false })
-  password!: string;
+    @Column({ type: 'varchar', nullable: false })
+    password!: string;
 
-  @Column({ type: "varchar", nullable: false })
-  mfaSecret!: string;
+    @Column({ type: 'varchar', nullable: false })
+    mfaSecret!: string;
 
-  @Column({ type: "enum", enum: UserStatus, default: UserStatus.CREATED })
-  status!: UserStatus;
+    @Column({ type: 'enum', enum: UserStatus, default: UserStatus.CREATED })
+    status!: UserStatus;
 }

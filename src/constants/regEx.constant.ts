@@ -1,4 +1,4 @@
 export const RegEx = {
-  INT: /^-?\d+$/,
-  MOBILE_NUMBER: /^\d{10}$/,
+    INT: /^-?\d+$/,
+    MOBILE_NUMBER: /^\d{10}$/,
 };
